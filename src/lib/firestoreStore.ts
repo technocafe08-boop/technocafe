@@ -105,7 +105,7 @@ export function createFirestoreStore<T extends FSItem>(collectionPath: string, s
       const batch = writeBatch(db);
       seed.forEach((s, i) => {
         const { id, ...rest } = s;
-        batch.set(doc(db, collectionPath, id), stripUndefinedValues({ ...rest, order: s.order ?? i }));
+        batch.set(doc(db, collectionPath, id), stripUndefinedValues({ ...rest, id, order: s.order ?? i }));
       });
       batch.commit().catch(() => markDegraded("Unable to seed Firestore"));
     }
@@ -185,7 +185,7 @@ export function createFirestoreStore<T extends FSItem>(collectionPath: string, s
       sortAndSet([...items, nextItem]);
       if (firebaseConfigured) {
         try {
-          await setDoc(doc(db, collectionPath, id), stripUndefinedValues({ ...data, order }));
+          await setDoc(doc(db, collectionPath, id), stripUndefinedValues({ ...data, id, order }));
           remoteHealthy = true;
           lastSyncError = "";
         } catch (err) {
