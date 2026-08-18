@@ -2,9 +2,9 @@ import { FaInstagram, FaWhatsapp, FaMapMarkerAlt } from "react-icons/fa";
 import logoIcon from "../assets/logo-icon.png";
 
 const LINKS = [
-  { icon: FaInstagram, label: "Instagram", href: "https://instagram.com" },
-  { icon: FaWhatsapp, label: "WhatsApp", href: "https://wa.me/" },
-  { icon: FaMapMarkerAlt, label: "Google Maps", href: "https://maps.google.com" },
+  { icon: FaInstagram, label: "Instagram", href: "https://www.instagram.com/technocafejpg?igsh=aXM3dWV4Z2p2YWV6" },
+  { icon: FaWhatsapp, label: "WhatsApp", href: "https://wa.me/919609788672" },
+  { icon: FaMapMarkerAlt, label: "Google Maps", href: "https://share.google/XRItS9Y4xBsuSDkMp" },
 ];
 
 export default function Footer() {
