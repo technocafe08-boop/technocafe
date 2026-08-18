@@ -17,7 +17,7 @@ export default function Menu() {
         transition={{ duration: 0.7 }}
       >
         <h2 className="font-heading text-3xl md:text-5xl font-bold gradient-text">
-          CAFE MENU
+          FOOD MENU
         </h2>
         <p className="mt-3 text-white/60 font-body text-sm md:text-base">
           Fuel up between matches — snacks, quick bites, and drinks.

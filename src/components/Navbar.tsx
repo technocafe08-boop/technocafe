@@ -23,57 +23,70 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 md:px-10 py-4 bg-gradient-to-b from-bg/90 to-transparent">
-        <span className="flex items-center gap-2 md:gap-3">
-          <img src={logoIcon} alt="Techno Cafe" className="h-9 md:h-11 w-auto select-none" draggable={false} />
-          <span className="font-heading text-lg md:text-xl font-bold tracking-widest text-white">
-            TECHNO<span className="text-cyan">.</span>CAFE
+      <nav className="fixed top-0 left-0 right-0 z-50 px-3 md:px-10 pt-3">
+        <div className="glass rgb-border relative flex items-center justify-between gap-4 rounded-3xl px-4 md:px-8 py-3 shadow-2xl shadow-black/25">
+          <span className="flex items-center gap-2 md:gap-3">
+            <img src={logoIcon} alt="Techno Cafe" className="h-9 md:h-11 w-auto select-none" draggable={false} />
+            <span className="font-heading text-lg md:text-xl font-bold tracking-widest text-white">
+              TECHNO<span className="text-cyan">.</span>CAFE
+            </span>
           </span>
-        </span>
 
-        <div className="hidden md:flex items-center gap-8">
-          {LINKS.map((l) => (
-            <button
-              key={l.href}
-              onClick={() => handleLink(l.href)}
-              className="text-sm tracking-wide text-white/80 hover:text-cyan transition-colors font-body"
-              data-cursor-hover
-            >
-              {l.label}
-            </button>
-          ))}
+          <div className="hidden md:flex items-center gap-8">
+            {LINKS.map((l) => (
+              <button
+                key={l.href}
+                onClick={() => handleLink(l.href)}
+                className="text-sm tracking-wide text-white/80 hover:text-cyan transition-colors font-body"
+                data-cursor-hover
+              >
+                {l.label}
+              </button>
+            ))}
+          </div>
+
+          <button
+            aria-label="Toggle menu"
+            aria-expanded={open}
+            aria-controls="mobile-menu"
+            onClick={() => setOpen((v) => !v)}
+            className="md:hidden relative z-10 w-11 h-11 flex items-center justify-center rounded-full glass shadow-lg shadow-black/30"
+            data-cursor-hover
+          >
+            {open ? <X size={22} color="#00C2FF" /> : <Menu size={22} color="#00C2FF" />}
+          </button>
         </div>
-
-        <button
-          aria-label="Toggle menu"
-          onClick={() => setOpen((v) => !v)}
-          className="md:hidden w-11 h-11 flex items-center justify-center rounded-full glass"
-          data-cursor-hover
-        >
-          {open ? <X size={22} color="#00C2FF" /> : <Menu size={22} color="#00C2FF" />}
-        </button>
       </nav>
 
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center gap-8 bg-bg/98 md:hidden"
+            id="mobile-menu"
+            className="fixed inset-0 z-40 flex items-start justify-center bg-bg/80 px-5 pt-24 backdrop-blur-xl md:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            onClick={() => setOpen(false)}
           >
-            {LINKS.map((l, i) => (
-              <motion.button
-                key={l.href}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: i * 0.06 }}
-                onClick={() => handleLink(l.href)}
-                className="font-heading text-2xl tracking-widest text-white active:text-cyan min-h-[48px]"
-              >
-                {l.label}
-              </motion.button>
-            ))}
+            <div
+              className="glass rgb-border w-full max-w-sm rounded-3xl p-6 shadow-2xl shadow-black/40"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="flex flex-col items-stretch gap-3">
+                {LINKS.map((l, i) => (
+                  <motion.button
+                    key={l.href}
+                    initial={{ opacity: 0, y: 16 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.05 }}
+                    onClick={() => handleLink(l.href)}
+                    className="font-heading text-lg tracking-[0.24em] text-white/90 active:text-cyan min-h-[48px] rounded-2xl bg-black/20 border border-white/10 px-5 text-left hover:border-cyan/50 hover:bg-cyan/10 transition-colors"
+                  >
+                    {l.label}
+                  </motion.button>
+                ))}
+              </div>
+            </div>
           </motion.div>
         )}
       </AnimatePresence>
