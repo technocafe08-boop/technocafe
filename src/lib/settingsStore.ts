@@ -3,10 +3,9 @@ import { db, firebaseConfigured } from "./firebase";
 import { stripUndefinedValues } from "./firestoreStore";
 
 export interface Settings {
-  /** Digits only, with country code, e.g. "9198XXXXXXXX" — no "+" or spaces. */
   whatsappNumber: string;
-  /** Simple admin panel password. Not high-security — good enough to keep casual visitors out. */
   adminPassword: string;
+  updatedAt?: number;
 }
 
 const DEFAULT_PASSWORD = "technocafe123";
@@ -44,6 +43,10 @@ function writeCache(value: Settings): void {
   }
 }
 
+function getVersion(value: Settings | null | undefined): number {
+  return typeof value?.updatedAt === "number" ? value.updatedAt : 0;
+}
+
 let settings: Settings = readCache() ?? { ...defaultSettings };
 let ready = false;
 let triedInit = false;
@@ -62,19 +65,20 @@ if (firebaseConfigured) {
       ref,
       (snap) => {
         if (snap.exists()) {
-          settings = { ...defaultSettings, ...(snap.data() as Partial<Settings>) };
+          const remote = { ...defaultSettings, ...(snap.data() as Partial<Settings>) };
+          const cached = readCache();
+          settings = getVersion(cached) > getVersion(remote) ? (cached as Settings) : remote;
           writeCache(settings);
           remoteHealthy = true;
           lastSyncError = "";
         } else if (!triedInit) {
-          // If Firestore has no doc but we already have cached settings, keep the cache.
           const cached = readCache();
           if (cached) {
             settings = cached;
             markDegraded("Remote settings doc is missing while local cache exists");
           } else {
             triedInit = true;
-            setDoc(ref, defaultSettings).catch(() => {
+            setDoc(ref, { ...defaultSettings, updatedAt: Date.now() }).catch(() => {
               markDegraded("Failed to initialize default settings in Firestore");
             });
           }
@@ -122,7 +126,7 @@ export const settingsStore = {
     };
   },
   async update(updates: Partial<Settings>): Promise<void> {
-    settings = { ...settings, ...updates };
+    settings = { ...settings, ...updates, updatedAt: Date.now() };
     writeCache(settings);
     if (firebaseConfigured) {
       try {
@@ -142,9 +146,6 @@ export const settingsStore = {
   },
 };
 
-/** Builds a WhatsApp deep link with a prefilled message. Falls back to the
- * generic web.whatsapp "send" endpoint (no number) if no number is configured yet,
- * which still opens a chat composer. */
 export function buildWhatsAppLink(message: string): string {
   const text = encodeURIComponent(message);
   const number = settings.whatsappNumber.replace(/[^\d]/g, "");

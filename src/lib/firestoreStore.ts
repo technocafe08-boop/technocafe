@@ -11,6 +11,7 @@ import { db, firebaseConfigured } from "./firebase";
 export interface FSItem {
   id: string;
   order?: number;
+  updatedAt?: number;
   [key: string]: unknown;
 }
 
@@ -52,6 +53,10 @@ function writeCache<T>(key: string, value: T[]): void {
   } catch {
     // ignore cache write failures
   }
+}
+
+function getItemVersion(item: { updatedAt?: number } | undefined): number {
+  return typeof item?.updatedAt === "number" ? item.updatedAt : 0;
 }
 
 export function stripUndefinedValues<T>(value: T): T {
@@ -102,13 +107,21 @@ export function createFirestoreStore<T extends FSItem>(collectionPath: string, s
     if (!firebaseConfigured || seedAttempted || seed.length === 0) return;
     seedAttempted = true;
     if (emptySnap) {
-      const batch = writeBatch(db);
-      seed.forEach((s, i) => {
-        const { id, ...rest } = s;
-        batch.set(doc(db, collectionPath, id), stripUndefinedValues({ ...rest, id, order: s.order ?? i }));
-      });
-      batch.commit().catch(() => markDegraded("Unable to seed Firestore"));
-    }
+        const batch = writeBatch(db);
+        seed.forEach((s, i) => {
+          const { id, ...rest } = s;
+          batch.set(
+            doc(db, collectionPath, id),
+            stripUndefinedValues({
+              ...rest,
+              id,
+              order: s.order ?? i,
+              updatedAt: s.updatedAt ?? Date.now(),
+            })
+          );
+        });
+        batch.commit().catch(() => markDegraded("Unable to seed Firestore"));
+      }
   }
 
   if (typeof window !== "undefined") {
@@ -134,8 +147,12 @@ export function createFirestoreStore<T extends FSItem>(collectionPath: string, s
           const remoteItems = snap.docs.map((d) => ({ ...(d.data() as T), id: d.id }));
           const remoteMap = new Map(remoteItems.map((it) => [it.id, it]));
 
-          // Always merge remote items with any locally added/cached items that are not in remoteItems yet
-          const merged = [...remoteItems];
+          const merged = remoteItems.map((remoteIt) => {
+            const localIt = items.find((it) => it.id === remoteIt.id);
+            if (!localIt) return remoteIt;
+            return getItemVersion(localIt) >= getItemVersion(remoteIt) ? localIt : remoteIt;
+          });
+
           for (const localIt of items) {
             if (!remoteMap.has(localIt.id)) {
               merged.push(localIt);
@@ -181,11 +198,12 @@ export function createFirestoreStore<T extends FSItem>(collectionPath: string, s
       const name = (data as { name?: string }).name || "item";
       const id = explicitId || slugify(name, existingIds);
       const order = items.length;
-      const nextItem = { ...(data as Record<string, unknown>), id, order } as T;
+      const updatedAt = Date.now();
+      const nextItem = { ...(data as Record<string, unknown>), id, order, updatedAt } as T;
       sortAndSet([...items, nextItem]);
       if (firebaseConfigured) {
         try {
-          await setDoc(doc(db, collectionPath, id), stripUndefinedValues({ ...data, id, order }));
+          await setDoc(doc(db, collectionPath, id), stripUndefinedValues({ ...data, id, order, updatedAt }));
           remoteHealthy = true;
           lastSyncError = "";
         } catch (err) {
@@ -197,10 +215,13 @@ export function createFirestoreStore<T extends FSItem>(collectionPath: string, s
       return id;
     },
     async update(id: string, data: Partial<Omit<T, "id">>): Promise<void> {
-      sortAndSet(items.map((item) => (item.id === id ? ({ ...item, ...data } as T) : item)));
+      const updatedAt = Date.now();
+      sortAndSet(items.map((item) => (item.id === id ? ({ ...item, ...data, updatedAt } as T) : item)));
       if (firebaseConfigured) {
         try {
-          await setDoc(doc(db, collectionPath, id), stripUndefinedValues(data), { merge: true });
+          await setDoc(doc(db, collectionPath, id), stripUndefinedValues({ ...data, updatedAt }), {
+            merge: true,
+          });
           remoteHealthy = true;
           lastSyncError = "";
         } catch (err) {
@@ -228,14 +249,18 @@ export function createFirestoreStore<T extends FSItem>(collectionPath: string, s
       const next = orderedIds
         .map((id, i) => {
           const item = items.find((it) => it.id === id);
-          return item ? ({ ...item, order: i } as T) : null;
+          return item ? ({ ...item, order: i, updatedAt: Date.now() } as T) : null;
         })
         .filter((item): item is T => item !== null);
       sortAndSet(next);
       if (firebaseConfigured) {
         const batch = writeBatch(db);
         orderedIds.forEach((id, i) =>
-          batch.set(doc(db, collectionPath, id), stripUndefinedValues({ order: i }), { merge: true })
+          batch.set(
+            doc(db, collectionPath, id),
+            stripUndefinedValues({ order: i, updatedAt: Date.now() }),
+            { merge: true }
+          )
         );
         try {
           await batch.commit();
