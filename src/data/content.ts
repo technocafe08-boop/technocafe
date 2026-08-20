@@ -36,11 +36,11 @@ export const stats = [
 ];
 
 export const whyChooseUs = [
+  { title: "Latest Games", icon: "Tag" },
   { title: "Ultra Fast Internet", icon: "Wifi" },
   { title: "High End Gameing PC", icon: "Armchair" },
   { title: "Friendly Atmosphere", icon: "Snowflake" },
   { title: "Premium Peripherals", icon: "Mouse" },
-  { title: "Latest Games", icon: "Tag" },
 ];
 
 

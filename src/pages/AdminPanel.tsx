@@ -7,6 +7,7 @@ import TaxonomyTab from "./admin/TaxonomyTab";
 import MenuTab from "./admin/MenuTab";
 import GalleryTab from "./admin/GalleryTab";
 import SettingsTab from "./admin/SettingsTab";
+import StatsTab from "./admin/StatsTab";
 import { adminAuth } from "../lib/adminAuth";
 
 const TABS = [
@@ -14,6 +15,7 @@ const TABS = [
   { id: "taxonomy", label: "Categories" },
   { id: "menu", label: "Food Menu" },
   { id: "gallery", label: "Gallery" },
+  { id: "stats", label: "Stats" },
   { id: "settings", label: "Settings" },
 ] as const;
 
@@ -67,6 +69,7 @@ export default function AdminPanel() {
           {tab === "taxonomy" && <TaxonomyTab />}
           {tab === "menu" && <MenuTab />}
           {tab === "gallery" && <GalleryTab />}
+          {tab === "stats" && <StatsTab />}
           {tab === "settings" && <SettingsTab onLogout={() => setLoggedIn(false)} />}
         </div>
       </div>

@@ -4,9 +4,9 @@ import { Menu, X } from "lucide-react";
 import logoIcon from "../assets/logo-icon.png";
 
 const LINKS = [
-  { label: "Setups", href: "#setups" },
   { label: "Games", href: "#games" },
-  { label: "Menu", href: "#menu" },
+  { label: "Food Menu", href: "#menu" },
+  { label: "Setups", href: "#setups" },
   { label: "Build PC", href: "#build-pc" },
   { label: "Stats", href: "#stats" },
   { label: "Why Us", href: "#why-us" },

@@ -37,9 +37,9 @@ function MainSite({
           <Navbar />
           <main>
             <Hero />
-            <SetupShowcase />
             <GamesLibrary />
             <Menu />
+            <SetupShowcase />
             <BuildYourDreamPC />
             <Stats />
             <WhyChooseUs />

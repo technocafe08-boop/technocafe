@@ -89,22 +89,6 @@ export default function Hero() {
         </motion.p>
 
         <motion.div
-          className="mt-7 flex flex-wrap justify-center gap-2 md:gap-3"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-        >
-          {["240Hz Gaming PCs", "Xbox Coming Soon", "Fast Internet", "Premium Gaming Zone"].map((tag) => (
-            <span
-              key={tag}
-              className="glass rounded-full px-3 py-1.5 md:px-4 md:py-2 text-[11px] md:text-xs font-body tracking-wide text-white/90"
-            >
-              {tag}
-            </span>
-          ))}
-        </motion.div>
-
-        <motion.div
           className="mt-9"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

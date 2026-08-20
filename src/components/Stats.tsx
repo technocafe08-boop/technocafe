@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
-import { stats } from "../data/content";
+import { statsStore } from "../lib/statsStore";
 
 function Counter({ value, suffix }: { value: number; suffix: string }) {
   const ref = useRef<HTMLSpanElement>(null);
@@ -30,11 +30,26 @@ function Counter({ value, suffix }: { value: number; suffix: string }) {
   );
 }
 
+function useStats() {
+  const [data, setData] = useState(statsStore.get());
+  useEffect(() => statsStore.subscribe(() => setData(statsStore.get())), []);
+  return data;
+}
+
 export default function Stats() {
+  const s = useStats();
+
+  const statItems = [
+    { value: s.dailyCustomers, suffix: "+", label: "Daily Customers" },
+    { value: s.gamingPCs, suffix: "+", label: "Gaming PCs" },
+    { value: s.happyCustomers, suffix: "+", label: "Happy Customers" },
+    { value: s.gameLibrary, suffix: "+", label: "Game Library" },
+  ];
+
   return (
     <section id="stats" className="relative py-20 md:py-28 px-5 md:px-10 bg-bg">
       <div className="max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-6 text-center">
-        {stats.map((s, i) => (
+        {statItems.map((s, i) => (
           <motion.div
             key={s.label}
             initial={{ opacity: 0, scale: 0.85 }}
