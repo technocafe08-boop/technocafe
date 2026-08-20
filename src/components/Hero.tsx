@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import ParticleField from "./ParticleField";
 import MagneticButton from "./MagneticButton";
+import logoHome from "../assets/logo-home.png";
 
 export default function Hero() {
   const heroRef = useRef<HTMLDivElement>(null);
@@ -69,33 +70,24 @@ export default function Hero() {
           transformStyle: "preserve-3d",
         }}
       >
-        <motion.h1
-          data-text="TECHNO CAFE"
-          className="glitch font-heading text-[13vw] leading-none xs:text-6xl md:text-8xl lg:text-[7.5rem] font-black tracking-wider gradient-text"
+        <motion.img
+          src={logoHome}
+          alt="Techno Cafe Logo"
+          className="w-full max-w-[280px] xs:max-w-[360px] md:max-w-[480px] lg:max-w-[560px] h-auto select-none drop-shadow-[0_15px_30px_rgba(0,194,255,0.25)]"
+          draggable={false}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.9, ease: "easeOut" }}
-        >
-          TECHNO CAFE
-        </motion.h1>
-
-        <motion.p
-          className="mt-5 font-heading text-sm xs:text-base md:text-xl tracking-[0.25em] text-cyan neon-cyan"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.3 }}
-        >
-          LEVEL UP YOUR GAMING EXPERIENCE
-        </motion.p>
+        />
 
         <motion.div
           className="mt-9"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.7 }}
+          transition={{ duration: 0.8, delay: 0.4 }}
         >
           <MagneticButton
-            onClick={() => document.querySelector("#setups")?.scrollIntoView({ behavior: "smooth" })}
+            onClick={() => document.querySelector("#games")?.scrollIntoView({ behavior: "smooth" })}
             className="relative font-heading tracking-[0.2em] text-sm md:text-base font-bold px-9 py-4 md:px-11 md:py-5 rounded-full text-black bg-gradient-to-r from-cyan to-purple neon-box-cyan min-h-[48px] w-full xs:w-auto"
           >
             PLAY NOW
