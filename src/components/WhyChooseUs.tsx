@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
-import { Wifi, Armchair, Snowflake, Mouse, Tag } from "lucide-react";
+import { Wifi, Armchair, Snowflake, Mouse, Tag, Coffee } from "lucide-react";
 import { whyChooseUs } from "../data/content";
 
-const ICONS: Record<string, React.ElementType> = { Wifi, Armchair, Snowflake, Mouse, Tag };
+const ICONS: Record<string, React.ElementType> = { Wifi, Armchair, Snowflake, Mouse, Tag, Coffee };
 
 export default function WhyChooseUs() {
   return (
