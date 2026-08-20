@@ -32,7 +32,6 @@ export default function MenuTab() {
 
   const [editingItemId, setEditingItemId] = useState<string | null>(null);
   const [itemName, setItemName] = useState("");
-  const [itemPrice, setItemPrice] = useState("");
   const [itemCategory, setItemCategory] = useState("");
   const [itemSub, setItemSub] = useState("");
   const [error, setError] = useState("");
@@ -89,16 +88,14 @@ export default function MenuTab() {
   function resetItemForm() {
     setEditingItemId(null);
     setItemName("");
-    setItemPrice("");
     setItemCategory("");
     setItemSub("");
     setError("");
   }
 
-  function startEditItem(item: { id: string; name: string; price: number; categoryId: string; subCategoryId?: string }) {
+  function startEditItem(item: { id: string; name: string; categoryId: string; subCategoryId?: string }) {
     setEditingItemId(item.id);
     setItemName(item.name);
-    setItemPrice(String(item.price));
     setItemCategory(item.categoryId);
     setItemSub(item.subCategoryId || "");
     setError("");
@@ -106,19 +103,13 @@ export default function MenuTab() {
 
   async function handleSubmitItem(e: React.FormEvent) {
     e.preventDefault();
-    const price = Number(itemPrice);
     if (!itemName.trim() || !itemCategory) {
       setError("Item name and category are required.");
-      return;
-    }
-    if (!Number.isFinite(price) || price <= 0) {
-      setError("Price must be a positive number.");
       return;
     }
     setError("");
     const payload = {
       name: itemName.trim(),
-      price,
       categoryId: itemCategory,
       subCategoryId: itemSub || undefined,
     };
@@ -152,7 +143,6 @@ export default function MenuTab() {
       <h2 className="font-heading text-lg font-bold text-white/80 mb-4">FOOD MENU</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Categories */}
         <section className="glass rounded-2xl p-5 md:p-6">
           <h3 className="font-heading text-sm font-bold mb-4 text-cyan tracking-wide">CATEGORIES</h3>
           <div className="flex flex-wrap gap-2 mb-4">
@@ -196,11 +186,10 @@ export default function MenuTab() {
           </form>
         </section>
 
-        {/* Sub-categories */}
         <section className="glass rounded-2xl p-5 md:p-6">
           <h3 className="font-heading text-sm font-bold mb-4 text-cyan tracking-wide">SUB-CATEGORIES</h3>
           <p className="text-white/40 text-xs mb-3">
-            Optional — group items within a category (e.g. "Veg" / "Non-Veg" inside Maggi).
+            Optional - group items within a category (e.g. "Veg" / "Non-Veg" inside Maggi).
           </p>
           <div className="flex flex-wrap gap-2 mb-4">
             {subCategories.map((s) => {
@@ -212,12 +201,12 @@ export default function MenuTab() {
                 >
                   {s.name}
                   {parent && <span className="text-white/30">· {parent.name}</span>}
-                <button
-                  type="button"
-                  onClick={() => handleDeleteSub(s.id)}
-                  aria-label={`Delete ${s.name}`}
-                  className="w-5 h-5 flex items-center justify-center rounded-full hover:bg-pink/20 hover:text-pink"
-                >
+                  <button
+                    type="button"
+                    onClick={() => handleDeleteSub(s.id)}
+                    aria-label={`Delete ${s.name}`}
+                    className="w-5 h-5 flex items-center justify-center rounded-full hover:bg-pink/20 hover:text-pink"
+                  >
                     <X size={11} />
                   </button>
                 </span>
@@ -231,7 +220,7 @@ export default function MenuTab() {
               onChange={(e) => setSubParent(e.target.value)}
               className="rounded-lg bg-white/5 border border-white/15 px-3 py-2 text-sm text-white focus:outline-none focus:border-cyan"
             >
-              <option value="" className="bg-bg">Category…</option>
+              <option value="" className="bg-bg">Category...</option>
               {categories.map((c) => (
                 <option key={c.id} value={c.id} className="bg-bg">
                   {c.name}
@@ -256,7 +245,6 @@ export default function MenuTab() {
         </section>
       </div>
 
-      {/* Item form */}
       <form onSubmit={handleSubmitItem} className="mt-6 glass rgb-border rounded-2xl p-6 md:p-8">
         <h3 className="font-heading text-base font-bold mb-5 text-cyan">
           {editingItemId ? "EDIT ITEM" : "ADD MENU ITEM"}
@@ -272,16 +260,6 @@ export default function MenuTab() {
             />
           </label>
           <label className="flex flex-col gap-1.5 text-sm">
-            Price (₹)
-            <input
-              value={itemPrice}
-              onChange={(e) => setItemPrice(e.target.value)}
-              placeholder="e.g. 80"
-              inputMode="numeric"
-              className="rounded-lg bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm text-white placeholder:text-white/30 focus:outline-none focus:border-cyan"
-            />
-          </label>
-          <label className="flex flex-col gap-1.5 text-sm">
             Category
             <select
               value={itemCategory}
@@ -291,7 +269,7 @@ export default function MenuTab() {
               }}
               className="rounded-lg bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-cyan"
             >
-              <option value="" className="bg-bg">Choose…</option>
+              <option value="" className="bg-bg">Choose...</option>
               {categories.map((c) => (
                 <option key={c.id} value={c.id} className="bg-bg">
                   {c.emoji} {c.name}
@@ -335,7 +313,6 @@ export default function MenuTab() {
         </div>
       </form>
 
-      {/* Items list, grouped by category */}
       <div className="mt-8 space-y-6">
         {categories.map((c) => {
           const catItems = items.filter((it) => it.categoryId === c.id);
@@ -350,12 +327,11 @@ export default function MenuTab() {
                   <div key={item.id} className="flex items-center gap-4 glass rounded-xl p-3">
                     <div className="min-w-0 flex-1">
                       <p className="font-heading text-sm font-bold text-white truncate">{item.name}</p>
-                      <p className="text-white/50 text-xs">
-                        ₹{item.price}
-                        {item.subCategoryId && (
-                          <> · {subCategories.find((s) => s.id === item.subCategoryId)?.name}</>
-                        )}
-                      </p>
+                      {item.subCategoryId && (
+                        <p className="text-white/50 text-xs">
+                          {subCategories.find((s) => s.id === item.subCategoryId)?.name}
+                        </p>
+                      )}
                     </div>
                     <button
                       type="button"
@@ -380,7 +356,7 @@ export default function MenuTab() {
           );
         })}
         {items.length === 0 && (
-          <p className="text-white/40 text-sm text-center py-6">No menu items yet — add your first one above.</p>
+          <p className="text-white/40 text-sm text-center py-6">No menu items yet - add your first one above.</p>
         )}
       </div>
     </div>

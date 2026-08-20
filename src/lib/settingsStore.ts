@@ -5,6 +5,7 @@ import { stripUndefinedValues } from "./firestoreStore";
 export interface Settings {
   whatsappNumber: string;
   adminPassword: string;
+  announcementText: string;
   updatedAt?: number;
 }
 
@@ -13,6 +14,7 @@ const DEFAULT_PASSWORD = "technocafe123";
 const defaultSettings: Settings = {
   whatsappNumber: "",
   adminPassword: DEFAULT_PASSWORD,
+  announcementText: "",
 };
 
 const cacheKey = "techno-cafe:settings";

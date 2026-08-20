@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import { Link } from "react-router-dom";
 import logoIcon from "../assets/logo-icon.png";
 
 const LINKS = [
+  { label: "Upcoming", href: "#upcoming-games" },
   { label: "Games", href: "#games" },
   { label: "Food Menu", href: "#menu" },
   { label: "Setups", href: "#setups" },
@@ -23,40 +25,42 @@ export default function Navbar() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 px-3 md:px-10 pt-3">
-        <div className="glass rgb-border relative flex items-center justify-between gap-4 rounded-3xl px-4 md:px-8 py-3 shadow-2xl shadow-black/25">
-          <span className="flex items-center gap-2 md:gap-3">
-            <img src={logoIcon} alt="Techno Cafe" className="h-9 md:h-11 w-auto select-none" draggable={false} />
-            <span className="font-heading text-lg md:text-xl font-bold tracking-widest text-white">
-              TECHNO<span className="text-cyan">.</span>CAFE
-            </span>
-          </span>
+      <div className="fixed top-0 left-0 right-0 z-50 px-3 md:px-10 pt-3">
+        <nav>
+          <div className="glass rgb-border relative flex items-center justify-between gap-4 rounded-3xl px-4 md:px-8 py-3 shadow-2xl shadow-black/25">
+            <Link to="/" className="flex items-center gap-2 md:gap-3" aria-label="Techno Cafe home">
+              <img src={logoIcon} alt="Techno Cafe" className="h-9 md:h-11 w-auto select-none" draggable={false} />
+              <span className="font-heading text-lg md:text-xl font-bold tracking-widest text-white">
+                TECHNO<span className="text-cyan">.</span>CAFE
+              </span>
+            </Link>
 
-          <div className="hidden md:flex items-center gap-8">
-            {LINKS.map((l) => (
-              <button
-                key={l.href}
-                onClick={() => handleLink(l.href)}
-                className="text-sm tracking-wide text-white/80 hover:text-cyan transition-colors font-body"
-                data-cursor-hover
-              >
-                {l.label}
-              </button>
-            ))}
+            <div className="hidden md:flex items-center gap-8">
+              {LINKS.map((l) => (
+                <button
+                  key={l.href}
+                  onClick={() => handleLink(l.href)}
+                  className="text-sm tracking-wide text-white/80 hover:text-cyan transition-colors font-body"
+                  data-cursor-hover
+                >
+                  {l.label}
+                </button>
+              ))}
+            </div>
+
+            <button
+              aria-label="Toggle menu"
+              aria-expanded={open}
+              aria-controls="mobile-menu"
+              onClick={() => setOpen((v) => !v)}
+              className="md:hidden relative z-10 w-11 h-11 flex items-center justify-center rounded-full glass shadow-lg shadow-black/30"
+              data-cursor-hover
+            >
+              {open ? <X size={22} color="#00C2FF" /> : <Menu size={22} color="#00C2FF" />}
+            </button>
           </div>
-
-          <button
-            aria-label="Toggle menu"
-            aria-expanded={open}
-            aria-controls="mobile-menu"
-            onClick={() => setOpen((v) => !v)}
-            className="md:hidden relative z-10 w-11 h-11 flex items-center justify-center rounded-full glass shadow-lg shadow-black/30"
-            data-cursor-hover
-          >
-            {open ? <X size={22} color="#00C2FF" /> : <Menu size={22} color="#00C2FF" />}
-          </button>
-        </div>
-      </nav>
+        </nav>
+      </div>
 
       <AnimatePresence>
         {open && (

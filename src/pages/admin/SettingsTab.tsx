@@ -8,6 +8,8 @@ export default function SettingsTab({ onLogout }: { onLogout: () => void }) {
   const settings = useSettings();
   const [whatsapp, setWhatsapp] = useState(settings.whatsappNumber);
   const [savedWhatsapp, setSavedWhatsapp] = useState(false);
+  const [announcement, setAnnouncement] = useState(settings.announcementText);
+  const [savedAnnouncement, setSavedAnnouncement] = useState(false);
   const syncState = settingsStore.getSyncState();
 
   const [currentPassword, setCurrentPassword] = useState("");
@@ -16,8 +18,10 @@ export default function SettingsTab({ onLogout }: { onLogout: () => void }) {
   const [passSaved, setPassSaved] = useState(false);
 
   const [whatsappError, setWhatsappError] = useState("");
+  const [announcementError, setAnnouncementError] = useState("");
 
   useEffect(() => setWhatsapp(settings.whatsappNumber), [settings.whatsappNumber]);
+  useEffect(() => setAnnouncement(settings.announcementText), [settings.announcementText]);
 
   async function handleSaveWhatsapp(e: React.FormEvent) {
     e.preventDefault();
@@ -28,6 +32,18 @@ export default function SettingsTab({ onLogout }: { onLogout: () => void }) {
       setTimeout(() => setSavedWhatsapp(false), 2000);
     } catch (err) {
       setWhatsappError(err instanceof Error ? err.message : "Failed to save WhatsApp number.");
+    }
+  }
+
+  async function handleSaveAnnouncement(e: React.FormEvent) {
+    e.preventDefault();
+    setAnnouncementError("");
+    try {
+      await settingsStore.update({ announcementText: announcement.trim() });
+      setSavedAnnouncement(true);
+      setTimeout(() => setSavedAnnouncement(false), 2000);
+    } catch (err) {
+      setAnnouncementError(err instanceof Error ? err.message : "Failed to save announcement.");
     }
   }
 
@@ -64,6 +80,31 @@ export default function SettingsTab({ onLogout }: { onLogout: () => void }) {
       <h2 className="font-heading text-lg font-bold text-white/80 mb-4">SETTINGS</h2>
 
       <section className="glass rounded-2xl p-5 md:p-6">
+        <h3 className="font-heading text-sm font-bold mb-1 text-cyan tracking-wide">ANNOUNCEMENT BAR</h3>
+        <p className="text-white/50 text-xs mb-4">
+          This text shows on the public homepage banner. Leave it blank to hide the bar.
+        </p>
+        <form onSubmit={handleSaveAnnouncement} className="space-y-3">
+          <textarea
+            value={announcement}
+            onChange={(e) => setAnnouncement(e.target.value)}
+            placeholder="e.g. New tournaments every weekend - book your slot now!"
+            rows={3}
+            className="w-full rounded-lg bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm placeholder:text-white/30 focus:outline-none focus:border-cyan resize-none"
+          />
+          <div className="flex items-center gap-3">
+            <button
+              type="submit"
+              className="rounded-lg bg-cyan/20 border border-cyan/40 px-4 py-2 text-sm text-cyan hover:bg-cyan/30 font-heading tracking-wide"
+            >
+              {savedAnnouncement ? "SAVED" : "SAVE"}
+            </button>
+          </div>
+        </form>
+        {announcementError && <p className="mt-3 text-pink text-xs">{announcementError}</p>}
+      </section>
+
+      <section className="mt-6 glass rounded-2xl p-5 md:p-6">
         <h3 className="font-heading text-sm font-bold mb-1 text-cyan tracking-wide">WHATSAPP CONTACT</h3>
         <p className="text-white/50 text-xs mb-4">
           Used for every "Connect on WhatsApp" button on the site. Include the country code,

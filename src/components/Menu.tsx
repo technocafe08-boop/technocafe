@@ -16,11 +16,9 @@ export default function Menu() {
         viewport={{ once: true, amount: 0.3 }}
         transition={{ duration: 0.7 }}
       >
-        <h2 className="font-heading text-3xl md:text-5xl font-bold gradient-text">
-          FOOD MENU
-        </h2>
+        <h2 className="font-heading text-3xl md:text-5xl font-bold gradient-text">FOOD MENU</h2>
         <p className="mt-3 text-white/60 font-body text-sm md:text-base">
-          Fuel up between matches — snacks, quick bites, and drinks.
+          Fuel up between matches - snacks, quick bites, and drinks.
         </p>
       </motion.div>
 
@@ -71,16 +69,12 @@ export default function Menu() {
   );
 }
 
-function MenuItemList({ items }: { items: { id: string; name: string; price: number }[] }) {
+function MenuItemList({ items }: { items: { id: string; name: string }[] }) {
   return (
     <ul className="space-y-3">
       {items.map((item) => (
-        <li key={item.id} className="flex items-baseline justify-between gap-3 font-body">
-          <span className="text-white/80 text-sm md:text-base">{item.name}</span>
-          <span className="shrink-0 border-b border-dotted border-white/15 flex-1 mx-1" />
-          <span className="shrink-0 font-heading text-sm md:text-base text-purple">
-            ₹{item.price}
-          </span>
+        <li key={item.id} className="font-body text-sm md:text-base text-white/80">
+          {item.name}
         </li>
       ))}
     </ul>

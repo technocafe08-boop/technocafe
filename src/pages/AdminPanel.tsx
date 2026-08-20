@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
 import AdminLogin from "./admin/AdminLogin";
 import GamesTab from "./admin/GamesTab";
+import UpcomingTab from "./admin/UpcomingTab";
 import TaxonomyTab from "./admin/TaxonomyTab";
 import MenuTab from "./admin/MenuTab";
 import GalleryTab from "./admin/GalleryTab";
@@ -12,6 +13,7 @@ import { adminAuth } from "../lib/adminAuth";
 
 const TABS = [
   { id: "games", label: "Games" },
+  { id: "upcoming", label: "Upcoming Games" },
   { id: "taxonomy", label: "Categories" },
   { id: "menu", label: "Food Menu" },
   { id: "gallery", label: "Gallery" },
@@ -66,6 +68,7 @@ export default function AdminPanel() {
 
         <div className="mt-6">
           {tab === "games" && <GamesTab />}
+          {tab === "upcoming" && <UpcomingTab />}
           {tab === "taxonomy" && <TaxonomyTab />}
           {tab === "menu" && <MenuTab />}
           {tab === "gallery" && <GalleryTab />}

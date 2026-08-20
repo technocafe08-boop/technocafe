@@ -23,13 +23,7 @@ body {
   color: #ffffff;
   font-family: "Plus Jakarta Sans", sans-serif;
   overflow-x: hidden;
-  cursor: none;
-}
-
-@media (max-width: 767px) {
-  body {
-    cursor: auto;
-  }
+  cursor: auto;
 }
 
 h1, h2, h3, h4, .font-heading {
@@ -119,6 +113,33 @@ h1, h2, h3, h4, .font-heading {
   background-size: 60px 60px;
 }
 
+.announcement-marquee {
+  overflow: hidden;
+}
+
+.announcement-track {
+  display: flex;
+  width: max-content;
+  align-items: center;
+  gap: 3rem;
+  white-space: nowrap;
+  will-change: transform;
+  animation: announcementMarquee 16s linear infinite;
+}
+
+.announcement-copy {
+  flex: 0 0 auto;
+}
+
+@keyframes announcementMarquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
 /* Glitch effect for logo */
 .glitch {
   position: relative;
@@ -181,30 +202,4 @@ h1, h2, h3, h4, .font-heading {
 a:focus-visible, button:focus-visible {
   outline: 2px solid var(--cyan);
   outline-offset: 3px;
-}
-
-/* Custom cursor */
-.cursor-dot {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 2px solid var(--cyan);
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: difference;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s ease, height 0.2s ease, border-color 0.2s ease;
-}
-
-.rgb-cursor-trail {
-  position: fixed;
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  z-index: 9998;
-  border-radius: 50%;
-  mix-blend-mode: screen;
 }

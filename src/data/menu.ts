@@ -17,7 +17,7 @@ export interface MenuSubCategory {
 export interface MenuItem {
   id: string;
   name: string;
-  price: number;
+  price?: number;
   categoryId: string;
   /** Optional sub-category id (from defaultMenuSubCategories / admin-added ones). */
   subCategoryId?: string;
@@ -38,30 +38,30 @@ export const defaultMenuCategories: MenuCategory[] = [
 export const defaultMenuSubCategories: MenuSubCategory[] = [];
 
 export const defaultMenuItems: MenuItem[] = [
-  { id: "classic-masala-maggi", name: "Classic Masala Maggi", price: 50, categoryId: "maggi" },
-  { id: "veg-masala-maggi", name: "Veg Masala Maggi", price: 80, categoryId: "maggi" },
-  { id: "egg-maggi", name: "Egg Maggi", price: 80, categoryId: "maggi" },
-  { id: "cheese-maggi", name: "Cheese Maggi", price: 80, categoryId: "maggi" },
+  { id: "classic-masala-maggi", name: "Classic Masala Maggi", categoryId: "maggi" },
+  { id: "veg-masala-maggi", name: "Veg Masala Maggi", categoryId: "maggi" },
+  { id: "egg-maggi", name: "Egg Maggi", categoryId: "maggi" },
+  { id: "cheese-maggi", name: "Cheese Maggi", categoryId: "maggi" },
 
-  { id: "cheese-corn-sandwich", name: "Cheese Corn Sandwich", price: 80, categoryId: "sandwich" },
-  { id: "egg-mayo-sandwich", name: "Egg Mayo Sandwich", price: 80, categoryId: "sandwich" },
+  { id: "cheese-corn-sandwich", name: "Cheese Corn Sandwich", categoryId: "sandwich" },
+  { id: "egg-mayo-sandwich", name: "Egg Mayo Sandwich", categoryId: "sandwich" },
 
-  { id: "masala-omelette", name: "Masala Omelette", price: 60, categoryId: "quick-bites" },
-  { id: "cheese-omelette", name: "Cheese Omelette", price: 80, categoryId: "quick-bites" },
+  { id: "masala-omelette", name: "Masala Omelette", categoryId: "quick-bites" },
+  { id: "cheese-omelette", name: "Cheese Omelette", categoryId: "quick-bites" },
 
-  { id: "masala-pasta", name: "Masala Pasta", price: 60, categoryId: "pasta" },
-  { id: "egg-masala-pasta", name: "Egg Masala Pasta", price: 80, categoryId: "pasta" },
-  { id: "cheese-pasta", name: "Cheese Pasta", price: 60, categoryId: "pasta" },
-  { id: "mushroom-pasta", name: "Mushroom Pasta", price: 70, categoryId: "pasta" },
+  { id: "masala-pasta", name: "Masala Pasta", categoryId: "pasta" },
+  { id: "egg-masala-pasta", name: "Egg Masala Pasta", categoryId: "pasta" },
+  { id: "cheese-pasta", name: "Cheese Pasta", categoryId: "pasta" },
+  { id: "mushroom-pasta", name: "Mushroom Pasta", categoryId: "pasta" },
 
-  { id: "tea", name: "Tea", price: 20, categoryId: "hot-drinks" },
-  { id: "masala-tea", name: "Masala Tea", price: 30, categoryId: "hot-drinks" },
-  { id: "hot-coffee", name: "Hot Coffee", price: 50, categoryId: "hot-drinks" },
+  { id: "tea", name: "Tea", categoryId: "hot-drinks" },
+  { id: "masala-tea", name: "Masala Tea", categoryId: "hot-drinks" },
+  { id: "hot-coffee", name: "Hot Coffee", categoryId: "hot-drinks" },
 
-  { id: "lemon-soda", name: "Lemon Soda", price: 50, categoryId: "cold-drinks" },
-  { id: "cold-coffee", name: "Cold Coffee", price: 80, categoryId: "cold-drinks" },
-  { id: "chocolate-cold-coffee", name: "Chocolate Cold Coffee", price: 100, categoryId: "cold-drinks" },
-  { id: "oreo-milk-shake", name: "Oreo Milk Shake", price: 100, categoryId: "cold-drinks" },
+  { id: "lemon-soda", name: "Lemon Soda", categoryId: "cold-drinks" },
+  { id: "cold-coffee", name: "Cold Coffee", categoryId: "cold-drinks" },
+  { id: "chocolate-cold-coffee", name: "Chocolate Cold Coffee", categoryId: "cold-drinks" },
+  { id: "oreo-milk-shake", name: "Oreo Milk Shake", categoryId: "cold-drinks" },
 
-  { id: "pav-bhaji", name: "Pav Bhaji", price: 80, categoryId: "more" },
+  { id: "pav-bhaji", name: "Pav Bhaji", categoryId: "more" },
 ];

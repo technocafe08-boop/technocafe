@@ -1,6 +1,7 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Cropper from "react-easy-crop";
 import type { Area } from "react-easy-crop";
+import { createPortal } from "react-dom";
 import { UploadCloud, Check, X, Loader2 } from "lucide-react";
 import { getCroppedImageBlob } from "../../lib/cropImage";
 import { uploadToCloudinary } from "../../lib/cloudinary";
@@ -32,6 +33,15 @@ export default function ImageCropUpload({
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Area | null>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (!rawSrc || typeof document === "undefined") return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [rawSrc]);
 
   function handleFile(e: React.ChangeEvent<HTMLInputElement>) {
     const file = e.target.files?.[0];
@@ -91,9 +101,10 @@ export default function ImageCropUpload({
         </label>
       </div>
 
-      {rawSrc && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/85 backdrop-blur-sm p-4">
-          <div className="w-full max-w-md glass rgb-border rounded-2xl overflow-hidden">
+      {rawSrc && typeof document !== "undefined" &&
+        createPortal(
+          <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/90 backdrop-blur-md p-4">
+            <div className="w-full max-w-2xl glass rgb-border rounded-2xl overflow-hidden shadow-2xl shadow-black/60">
             <div className="relative h-[60vh] max-h-[420px] bg-black">
               <Cropper
                 image={rawSrc}
@@ -143,8 +154,9 @@ export default function ImageCropUpload({
               </div>
             </div>
           </div>
-        </div>
-      )}
+          </div>,
+          document.body
+        )}
     </div>
   );
 }
