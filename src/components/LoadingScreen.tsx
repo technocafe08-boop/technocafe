@@ -35,23 +35,15 @@ export default function LoadingScreen({ onDone }: { onDone: () => void }) {
           exit={{ opacity: 0 }}
           transition={{ duration: 0.4 }}
         >
-          <div className="relative w-44 h-44 md:w-56 md:h-56 rounded-full overflow-hidden border-2 border-cyan/40 shadow-[0_0_35px_rgba(0,194,255,0.3)] bg-black/80 flex items-center justify-center">
-            <motion.img
-              src={logoCustom}
-              alt="Techno Cafe Logo"
-              className="w-[104%] h-[104%] object-cover select-none"
-              draggable={false}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-            />
-          </div>
-          <h1
-            data-text="TECHNO CAFE"
-            className="glitch font-heading text-2xl xs:text-3xl md:text-5xl font-black tracking-widest text-white mt-5"
-          >
-            TECHNO CAFE
-          </h1>
+          <motion.img
+            src={logoCustom}
+            alt="Techno Cafe Logo"
+            className="h-56 xs:h-64 md:h-80 w-auto select-none drop-shadow-[0_0_30px_rgba(0,194,255,0.25)]"
+            draggable={false}
+            initial={{ opacity: 0, scale: 0.92 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.5 }}
+          />
           <p className="mt-4 text-cyan/80 font-body tracking-[0.3em] text-xs md:text-sm">
             LOADING{".".repeat((progress % 3) + 1)}
           </p>
