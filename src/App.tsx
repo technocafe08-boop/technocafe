@@ -16,6 +16,7 @@ import Menu from "./components/Menu";
 import BuildYourDreamPC from "./components/BuildYourDreamPC";
 import Stats from "./components/Stats";
 import WhyChooseUs from "./components/WhyChooseUs";
+import MembershipBenefits from "./components/MembershipBenefits";
 import Gallery from "./components/Gallery";
 import Footer from "./components/Footer";
 import EasterEggOverlay from "./components/EasterEggOverlay";
@@ -49,6 +50,7 @@ function MainSite({
             <BuildYourDreamPC />
             <Stats />
             <WhyChooseUs />
+            <MembershipBenefits />
             <Gallery />
           </main>
           <Footer />

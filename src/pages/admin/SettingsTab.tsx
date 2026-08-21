@@ -10,6 +10,12 @@ export default function SettingsTab({ onLogout }: { onLogout: () => void }) {
   const [savedWhatsapp, setSavedWhatsapp] = useState(false);
   const [announcement, setAnnouncement] = useState(settings.announcementText);
   const [savedAnnouncement, setSavedAnnouncement] = useState(false);
+  const [membershipTitle, setMembershipTitle] = useState(settings.membershipTitle);
+  const [membershipDescription, setMembershipDescription] = useState(settings.membershipDescription);
+  const [membershipBenefits, setMembershipBenefits] = useState(
+    settings.membershipBenefits.join("\n")
+  );
+  const [savedMembership, setSavedMembership] = useState(false);
   const syncState = settingsStore.getSyncState();
 
   const [currentPassword, setCurrentPassword] = useState("");
@@ -19,9 +25,13 @@ export default function SettingsTab({ onLogout }: { onLogout: () => void }) {
 
   const [whatsappError, setWhatsappError] = useState("");
   const [announcementError, setAnnouncementError] = useState("");
+  const [membershipError, setMembershipError] = useState("");
 
   useEffect(() => setWhatsapp(settings.whatsappNumber), [settings.whatsappNumber]);
   useEffect(() => setAnnouncement(settings.announcementText), [settings.announcementText]);
+  useEffect(() => setMembershipTitle(settings.membershipTitle), [settings.membershipTitle]);
+  useEffect(() => setMembershipDescription(settings.membershipDescription), [settings.membershipDescription]);
+  useEffect(() => setMembershipBenefits(settings.membershipBenefits.join("\n")), [settings.membershipBenefits]);
 
   async function handleSaveWhatsapp(e: React.FormEvent) {
     e.preventDefault();
@@ -44,6 +54,28 @@ export default function SettingsTab({ onLogout }: { onLogout: () => void }) {
       setTimeout(() => setSavedAnnouncement(false), 2000);
     } catch (err) {
       setAnnouncementError(err instanceof Error ? err.message : "Failed to save announcement.");
+    }
+  }
+
+  async function handleSaveMembership(e: React.FormEvent) {
+    e.preventDefault();
+    setMembershipError("");
+
+    const benefits = membershipBenefits
+      .split("\n")
+      .map((item) => item.trim())
+      .filter(Boolean);
+
+    try {
+      await settingsStore.update({
+        membershipTitle: membershipTitle.trim(),
+        membershipDescription: membershipDescription.trim(),
+        membershipBenefits: benefits,
+      });
+      setSavedMembership(true);
+      setTimeout(() => setSavedMembership(false), 2000);
+    } catch (err) {
+      setMembershipError(err instanceof Error ? err.message : "Failed to save membership section.");
     }
   }
 
@@ -125,6 +157,45 @@ export default function SettingsTab({ onLogout }: { onLogout: () => void }) {
           </button>
         </form>
         {whatsappError && <p className="mt-3 text-pink text-xs">{whatsappError}</p>}
+      </section>
+
+      <section className="mt-6 glass rounded-2xl p-5 md:p-6">
+        <h3 className="font-heading text-sm font-bold mb-1 text-cyan tracking-wide">MEMBERSHIP BENEFITS</h3>
+        <p className="text-white/50 text-xs mb-4">
+          This section appears on the homepage after "Why Choose Us." Edit the heading, description,
+          and each benefit line below.
+        </p>
+        <form onSubmit={handleSaveMembership} className="space-y-3">
+          <input
+            value={membershipTitle}
+            onChange={(e) => setMembershipTitle(e.target.value)}
+            placeholder="MEMBERSHIP BENEFITS"
+            className="w-full rounded-lg bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm placeholder:text-white/30 focus:outline-none focus:border-cyan"
+          />
+          <textarea
+            value={membershipDescription}
+            onChange={(e) => setMembershipDescription(e.target.value)}
+            placeholder="Short description shown under the heading"
+            rows={3}
+            className="w-full rounded-lg bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm placeholder:text-white/30 focus:outline-none focus:border-cyan resize-none"
+          />
+          <textarea
+            value={membershipBenefits}
+            onChange={(e) => setMembershipBenefits(e.target.value)}
+            placeholder="Enter one benefit per line"
+            rows={4}
+            className="w-full rounded-lg bg-white/5 border border-white/15 px-3.5 py-2.5 text-sm placeholder:text-white/30 focus:outline-none focus:border-cyan resize-none"
+          />
+          <div className="flex items-center gap-3">
+            <button
+              type="submit"
+              className="rounded-lg bg-cyan/20 border border-cyan/40 px-4 py-2 text-sm text-cyan hover:bg-cyan/30 font-heading tracking-wide"
+            >
+              {savedMembership ? "SAVED" : "SAVE"}
+            </button>
+          </div>
+        </form>
+        {membershipError && <p className="mt-3 text-pink text-xs">{membershipError}</p>}
       </section>
 
       <section className="mt-6 glass rounded-2xl p-5 md:p-6">

@@ -6,6 +6,9 @@ export interface Settings {
   whatsappNumber: string;
   adminPassword: string;
   announcementText: string;
+  membershipTitle: string;
+  membershipDescription: string;
+  membershipBenefits: string[];
   updatedAt?: number;
 }
 
@@ -15,6 +18,13 @@ const defaultSettings: Settings = {
   whatsappNumber: "",
   adminPassword: DEFAULT_PASSWORD,
   announcementText: "",
+  membershipTitle: "MEMBERSHIP BENEFITS",
+  membershipDescription: "Join the community and unlock perks made for regular gamers, families, and coffee runs.",
+  membershipBenefits: [
+    "Discounted hourly gaming rates",
+    "Priority booking for busy weekends",
+    "Exclusive member offers on food and drinks",
+  ],
 };
 
 const cacheKey = "techno-cafe:settings";
