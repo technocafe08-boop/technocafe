@@ -29,7 +29,7 @@ export default function Hero() {
     <section
       ref={heroRef}
       onMouseMove={handleMouseMove}
-      className="relative h-[100svh] w-full overflow-hidden flex items-center justify-center bg-bg"
+      className="relative min-h-[100svh] md:h-[100svh] w-full overflow-hidden flex items-center justify-center bg-bg pt-20 md:pt-0 pb-10 md:pb-0"
     >
       {/* Grid floor */}
       <div
@@ -62,7 +62,7 @@ export default function Hero() {
 
       {/* Content */}
       <motion.div
-        className="relative z-10 flex flex-col items-center text-center px-5"
+        className="relative z-10 flex flex-col items-center text-center px-4 -translate-y-6 md:translate-y-0"
         style={{
           transform: isDesktop
             ? `rotateY(${tilt.x * 4}deg) rotateX(${-tilt.y * 4}deg)`
@@ -73,7 +73,7 @@ export default function Hero() {
         <motion.img
           src={logoHome}
           alt="Techno Cafe Logo"
-          className="w-full max-w-[280px] xs:max-w-[360px] md:max-w-[480px] lg:max-w-[560px] h-auto select-none drop-shadow-[0_15px_30px_rgba(0,194,255,0.25)]"
+          className="w-full max-w-[250px] xs:max-w-[320px] md:max-w-[480px] lg:max-w-[560px] h-auto select-none drop-shadow-[0_15px_30px_rgba(0,194,255,0.25)]"
           draggable={false}
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -81,7 +81,7 @@ export default function Hero() {
         />
 
         <motion.div
-          className="mt-9"
+          className="mt-6 md:mt-9"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -97,7 +97,7 @@ export default function Hero() {
 
       {/* Scroll cue */}
       <motion.div
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 w-6 h-10 rounded-full border-2 border-cyan/60 flex justify-center pt-2"
+        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10 hidden w-6 h-10 rounded-full border-2 border-cyan/60 md:flex justify-center pt-2"
         animate={{ opacity: [0.4, 1, 0.4] }}
         transition={{ duration: 2, repeat: Infinity }}
       >

@@ -9,9 +9,9 @@ export default function Gallery() {
   const activeImage = images.find((img) => img.id === active) || null;
 
   return (
-    <section id="gallery" className="relative py-24 md:py-32 px-5 md:px-10 bg-bg">
+    <section id="gallery" className="relative py-14 md:py-32 px-5 md:px-10 bg-bg">
       <motion.h2
-        className="max-w-6xl mx-auto text-center font-heading text-3xl md:text-5xl font-bold gradient-text mb-14 md:mb-20"
+        className="max-w-6xl mx-auto text-center font-heading text-3xl md:text-5xl font-bold gradient-text mb-8 md:mb-20"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}

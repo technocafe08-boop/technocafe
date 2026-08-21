@@ -67,9 +67,9 @@ export default function GamesLibrary() {
       : filtered;
 
   return (
-    <section id="games" className="relative py-24 md:py-32 px-5 md:px-10 bg-bg overflow-hidden">
+    <section id="games" className="relative py-14 md:py-32 px-5 md:px-10 bg-bg overflow-hidden">
       <motion.div
-        className="max-w-6xl mx-auto text-center mb-10 md:mb-14"
+        className="max-w-6xl mx-auto text-center mb-8 md:mb-14"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
@@ -84,7 +84,7 @@ export default function GamesLibrary() {
       </motion.div>
 
       {/* ROW 1 — Category filter pills (full width, scrollable) */}
-      <div className="max-w-6xl mx-auto mb-3 flex gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
+      <div className="max-w-6xl mx-auto mb-3 flex gap-2 overflow-x-auto pb-1 -mx-5 px-5 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden">
         <FilterPill
           label="All Games"
           active={activeCategory === ALL}
@@ -102,7 +102,7 @@ export default function GamesLibrary() {
 
       {/* ROW 2 — Play mode pills (full width, scrollable) */}
       {visibleModes.length > 0 && (
-        <div className="max-w-6xl mx-auto mb-3 flex gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
+        <div className="max-w-6xl mx-auto mb-3 flex gap-2 overflow-x-auto pb-1 -mx-5 px-5 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden">
           <FilterPill
             small
             label="All Modes"
@@ -122,7 +122,7 @@ export default function GamesLibrary() {
       )}
 
       {/* ROW 3 — Sort button (full width row, button on the right) */}
-      <div className="max-w-6xl mx-auto mb-10 md:mb-14 flex items-center justify-end">
+      <div className="max-w-6xl mx-auto mb-8 md:mb-14 flex items-center justify-end">
         <div className="relative">
           <button
             onClick={() => setShowSortMenu((v) => !v)}

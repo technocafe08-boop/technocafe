@@ -34,8 +34,8 @@ export default function BuildYourDreamPC() {
   }
 
   return (
-    <section id="build-pc" className="relative py-24 md:py-32 px-5 md:px-10 bg-bg overflow-hidden">
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-8 items-center">
+    <section id="build-pc" className="relative py-14 md:py-32 px-5 md:px-10 bg-bg overflow-hidden">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-8 items-center">
         {/* Left: copy */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}

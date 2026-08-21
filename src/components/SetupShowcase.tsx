@@ -10,9 +10,9 @@ const ACCENTS: Record<string, string> = {
 
 export default function SetupShowcase() {
   return (
-    <section id="setups" className="relative py-24 md:py-32 px-5 md:px-10 bg-bg overflow-hidden">
+    <section id="setups" className="relative py-14 md:py-32 px-5 md:px-10 bg-bg overflow-hidden">
       <motion.div
-        className="max-w-6xl mx-auto text-center mb-14 md:mb-20"
+        className="max-w-6xl mx-auto text-center mb-8 md:mb-20"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
@@ -26,7 +26,7 @@ export default function SetupShowcase() {
         </p>
       </motion.div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-5 md:gap-8">
         {setups.map((setup, i) => (
           <motion.div
             key={setup.title}

@@ -8,9 +8,9 @@ export default function Menu() {
   const items = useMenuItems();
 
   return (
-    <section id="menu" className="relative py-24 md:py-32 px-5 md:px-10 bg-bg overflow-hidden">
+    <section id="menu" className="relative py-14 md:py-32 px-5 md:px-10 bg-bg overflow-hidden">
       <motion.div
-        className="max-w-6xl mx-auto text-center mb-14 md:mb-20"
+        className="max-w-6xl mx-auto text-center mb-8 md:mb-20"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
@@ -22,7 +22,7 @@ export default function Menu() {
         </p>
       </motion.div>
 
-      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-8">
         {categories.map((category, i) => {
           const categoryItems = items.filter((it) => it.categoryId === category.id);
           if (categoryItems.length === 0) return null;

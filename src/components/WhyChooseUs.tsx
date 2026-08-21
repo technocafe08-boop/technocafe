@@ -6,9 +6,9 @@ const ICONS: Record<string, React.ElementType> = { Wifi, Armchair, Snowflake, Mo
 
 export default function WhyChooseUs() {
   return (
-    <section id="why-us" className="relative py-24 md:py-32 px-5 md:px-10 bg-bg overflow-hidden">
+    <section id="why-us" className="relative py-14 md:py-32 px-5 md:px-10 bg-bg overflow-hidden">
       <motion.h2
-        className="max-w-6xl mx-auto text-center font-heading text-3xl md:text-5xl font-bold gradient-text mb-16 md:mb-20"
+        className="max-w-6xl mx-auto text-center font-heading text-3xl md:text-5xl font-bold gradient-text mb-8 md:mb-20"
         initial={{ opacity: 0, y: 30 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
@@ -20,7 +20,7 @@ export default function WhyChooseUs() {
       <div className="max-w-3xl mx-auto relative">
         <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-purple via-cyan to-pink md:-translate-x-1/2" />
 
-        <div className="space-y-10 md:space-y-14">
+        <div className="space-y-8 md:space-y-14">
           {whyChooseUs.map((item, i) => {
             const Icon = ICONS[item.icon];
             const isEven = i % 2 === 0;

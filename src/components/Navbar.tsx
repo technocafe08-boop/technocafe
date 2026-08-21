@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import logoIcon from "../assets/logo-icon.png";
 
 const LINKS = [
@@ -17,6 +17,17 @@ const LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  function handleHomeClick() {
+    setOpen(false);
+    if (location.pathname !== "/") {
+      navigate("/");
+      return;
+    }
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
 
   function handleLink(href: string) {
     setOpen(false);
@@ -28,12 +39,12 @@ export default function Navbar() {
       <div className="fixed top-0 left-0 right-0 z-50 px-3 md:px-10 pt-3">
         <nav>
           <div className="glass rgb-border relative flex items-center justify-between gap-4 rounded-3xl px-4 md:px-8 py-3 shadow-2xl shadow-black/25">
-            <Link to="/" className="flex items-center gap-2 md:gap-3" aria-label="Techno Cafe home">
+            <button onClick={handleHomeClick} className="flex items-center gap-2 md:gap-3 text-left" aria-label="Techno Cafe home">
               <img src={logoIcon} alt="Techno Cafe" className="h-9 md:h-11 w-auto select-none" draggable={false} />
               <span className="font-heading text-lg md:text-xl font-bold tracking-widest text-white">
                 TECHNO<span className="text-cyan">.</span>CAFE
               </span>
-            </Link>
+            </button>
 
             <div className="hidden md:flex items-center gap-8">
               {LINKS.map((l) => (

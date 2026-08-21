@@ -5,9 +5,9 @@ export default function UpcomingGames() {
   const games = useUpcomingGames();
 
   return (
-    <section id="upcoming-games" className="relative py-24 md:py-28 px-5 md:px-10 bg-bg overflow-hidden">
+    <section id="upcoming-games" className="relative py-14 md:py-28 px-5 md:px-10 bg-bg overflow-hidden">
       <motion.div
-        className="max-w-6xl mx-auto mb-8 md:mb-10"
+        className="max-w-6xl mx-auto mb-6 md:mb-10"
         initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, amount: 0.3 }}
