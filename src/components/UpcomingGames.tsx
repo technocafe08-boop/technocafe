@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { ArrowLeftRight } from "lucide-react";
 import { useUpcomingGames } from "../hooks/useUpcomingGames";
 
 export default function UpcomingGames() {
@@ -26,6 +27,17 @@ export default function UpcomingGames() {
             SCROLL HORIZONTALLY
           </span>
         </div>
+
+        <motion.div
+          className="mt-5 inline-flex md:hidden items-center gap-2 rounded-full glass px-3 py-2 text-[11px] font-heading tracking-[0.18em] text-white/65"
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 0.45 }}
+        >
+          <ArrowLeftRight size={13} className="text-cyan" />
+          SWIPE LEFT TO SEE MORE
+        </motion.div>
       </motion.div>
 
       <div className="max-w-6xl mx-auto">
